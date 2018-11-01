@@ -271,27 +271,27 @@ Request: GET http://.../v6/recipe-types/
 
 Response: 200 OK
 
- .. code-block:: javascript  
- 
-    { 
-        "count": 1, 
-        "next": null, 
-        "previous": null, 
-        "results": [ 
-            { 
-                "id" : 1,
-                "name": "my-recipe",
-                "title": "My Recipe", 
-                "description": "A simple recipe type", 
-                "is_active" : true,
-                "is_system" : false,
-                "revision_num" : 1,
-                "created" : "2015-06-15T19:03:26.346Z",
-                "deprecated" : "2015-07-15T19:03:26.346Z",
-                "last_modified" : "2015-06-15T19:03:26.346Z"
-            }
-        ] 
-    } 
+ .. code-block:: javascript
+
+    {
+      "count": 1,
+      "next": null,
+      "previous": null,
+      "results": [
+        {
+          "id": 1,
+          "name": "my-recipe",
+          "title": "My Recipe",
+          "description": "A simple recipe type",
+          "is_active": true,
+          "is_system": false,
+          "revision_num": 1,
+          "created": "2015-06-15T19:03:26.346Z",
+          "deprecated": "2015-07-15T19:03:26.346Z",
+          "last_modified": "2015-06-15T19:03:26.346Z"
+        }
+      ]
+    }
     
 
 +-------------------------------------------------------------------------------------------------------------------------+
@@ -336,8 +336,7 @@ Response: 200 OK
 +--------------------+-------------------+--------------------------------------------------------------------------------+
 | results            | Array             | List of result JSON objects that match the query parameters.                   |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
-| .id                | Integer           | The unique identifier of the model. Can be passed to the details API call.     |
-|                    |                   | (See :ref:`Recipe Type Details <rest_recipe_type_details>`)                    |
+| .id                | Integer           | The unique identifier of the model.                                            |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
 | .name              | String            | The identifying name of recipe job type used for queries.                      |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
@@ -685,25 +684,23 @@ Request: GET http://.../v6/recipe-types/{name}/
 
 Response: 200 OK
 
- .. code-block:: javascript  
- 
-    { 
-        { 
-            "id" : 1,
-            "name": "my-recipe",
-            "title": "My Recipe", 
-            "description": "A simple recipe type", 
-            "is_active" : true,
-            "is_system" : false,
-            "revision_num" : 1,
-            "definition" : {<rest_v6_recipe_json_definition>},
-            "job_types" : [<job type details>],
-            "sub_recipe_types" : [<recipe type details>],
-            "created" : "2015-06-15T19:03:26.346Z",
-            "deprecated" : "2015-07-15T19:03:26.346Z",
-            "last_modified" : "2015-06-15T19:03:26.346Z"
-        }
-    } 
+ .. code-block:: javascript
+
+    {
+      "id": 1,
+      "name": "my-recipe",
+      "title": "My Recipe",
+      "description": "A simple recipe type",
+      "is_active": true,
+      "is_system": false,
+      "revision_num": 1,
+      "definition": {:ref: `Recipe Definition <rest_v6_recipe_json_definition>`},
+      "job_types": [:ref: `Job Type Details <rest_v6_job_type_details>`],
+      "sub_recipe_types": [:ref:`Recipe Type Details <rest_v6_recipe_type_details>`],
+      "created": "2015-06-15T19:03:26.346Z",
+      "deprecated": "2015-07-15T19:03:26.346Z",
+      "last_modified": "2015-06-15T19:03:26.346Z"
+    }
     
 +-------------------------------------------------------------------------------------------------------------------------+
 | **Recipe Type Details**                                                                                                 |
@@ -723,9 +720,9 @@ Response: 200 OK
 +--------------------+-------------------+--------------------------------------------------------------------------------+
 | id                 | Integer           | The unique identifier of the model.                                            |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
-| name               | String            | The human-readable name of the recipe type.                                    |
+| name               | String            | The name of the recipe type.                                                   |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
-| version            | String            | The version of the recipe type.                                                |
+| title              | String            | The human-readable display name of the recipe type.                            |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
 | description        | String            | An optional description of the recipe type.                                    |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
@@ -741,8 +738,8 @@ Response: 200 OK
 | job_types          | Array             | List of all job_types that are referenced by this recipe type's definition     |
 |                    |                   | (See :ref:`Job Type Details <rest_v6_job_type_details>`)                       |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
-| job_types          | Array             | List of all job_types that are referenced by this recipe type's definition     |
-|                    |                   | (See :ref:`Job Type Details <rest_v6_job_type_details>`)                       |
+| sub_recipe_types   | Array             | List of all recipe_types that are referenced by this recipe type's definition  |
+|                    |                   | (See :ref:`Recipe Type Details <rest_v6_recipe_type_details>`)                 |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
 | created            | ISO-8601 Datetime | When the associated database model was initially created.                      |
 +--------------------+-------------------+--------------------------------------------------------------------------------+
@@ -950,4 +947,138 @@ Response: 200 OK
 |    }                                                                                                                    |
 +-------------------------------------------------------------------------------------------------------------------------+
 
-.. _rest_recipe_type_rev_details:
+
+.. _rest_v6_recipe_type_revisions:
+
+
+v6 Recipe Type Revisions
+------------------------
+
+**Example GET /v6/recipe-types/{name}/revisions/ API call**
+
+Request: GET http://.../v6/recipe-types/{name}/revisions/
+
+Response: 200 OK
+
+ .. code-block:: javascript
+
+    {
+      "count": 1,
+      "next": null,
+      "previous": null,
+      "results": [
+        {
+          "id": 1,
+          "recipe_type": {
+            "id": 1,
+            "name": "my-recipe",
+            "title": "My Recipe",
+            "description": "A simple recipe type",
+            "revision_num": 1
+          },
+          "revision_num": 1,
+          "created": "2015-06-15T19:03:26.346Z"
+        }
+      ]
+    }
+
++-------------------------------------------------------------------------------------------------------------------------+
+| **Recipe Type Revisions**                                                                                               |
++=========================================================================================================================+
+| Returns the revisions for a recipe type.                                                                                |
++-------------------------------------------------------------------------------------------------------------------------+
+| **GET** /v6/recipe-types/{name}/revisions                                                                               |
+|         Where {name} is the name of the recipe type.                                                                    |
++-------------------------------------------------------------------------------------------------------------------------+
+| **Query Parameters**                                                                                                    |
++--------------------+-------------------+----------+---------------------------------------------------------------------+
+| page               | Integer           | Optional | The page of the results to return. Defaults to 1.                   |
++--------------------+-------------------+----------+---------------------------------------------------------------------+
+| page_size          | Integer           | Optional | The size of the page to use for pagination of results.              |
+|                    |                   |          | Defaults to 100, and can be anywhere from 1-1000.                   |
++--------------------+-------------------+----------+---------------------------------------------------------------------+
+| **Successful Response**                                                                                                 |
++--------------------+----------------------------------------------------------------------------------------------------+
+| **Status**         | 200 OK                                                                                             |
++--------------------+----------------------------------------------------------------------------------------------------+
+| **Content Type**   | *application/json*                                                                                 |
++--------------------+----------------------------------------------------------------------------------------------------+
+| **JSON Fields**                                                                                                         |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| count              | Integer           | The total number of results that match the query parameters.                   |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| next               | URL               | A URL to the next page of results.                                             |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| previous           | URL               | A URL to the previous page of results.                                         |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| results            | Array             | List of result JSON objects that match the query parameters.                   |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| .id                | Integer           | The unique identifier of the model.                                            |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| .recipe_type       | String            | The recipe type for this revision.                                             |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| .revision_num      | Integer           | The revision number for this revision.                                         |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| .created           | ISO-8601 Datetime | When the associated database model was initially created.                      |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+
+
+.. _rest_v6_recipe_type_revision_details:
+
+v6 Recipe Type Revision Details
+-------------------------------
+
+**Example GET /v6/recipe-types/{name}/revisions/{revision_num}/ API call**
+
+Request: GET http://.../v6/recipe-types/{name}/revisions/{revision_num}
+
+Response: 200 OK
+
+ .. code-block:: javascript
+
+    {
+      "id": 1,
+      "recipe_type": {
+        "id": 1,
+        "name": "my-recipe",
+        "title": "My Recipe",
+        "description": "A simple recipe type",
+        "is_active": true,
+        "is_system": false,
+        "revision_num": 1,
+        "created": "2015-06-15T19:03:26.346Z",
+        "deprecated": "2015-07-15T19:03:26.346Z",
+        "last_modified": "2015-06-15T19:03:26.346Z"
+      },
+      "revision_num": 1,
+      "definition": {<rest_v6_recipe_json_definition>},
+      "created": "2015-06-15T19:03:26.346Z"
+    }
+
++-------------------------------------------------------------------------------------------------------------------------+
+| **Recipe Type Revision Details**                                                                                        |
++=========================================================================================================================+
+| Returns a specific recipe type revision and all its related model information.                                          |
++-------------------------------------------------------------------------------------------------------------------------+
+| **GET** /v6/recipe-types/{name}/{revision_num}/                                                                         |
+|         Where {name} is the name of the recipe type and {revision_num} is the revision number.                          |
++-------------------------------------------------------------------------------------------------------------------------+
+| **Successful Response**                                                                                                 |
++--------------------+----------------------------------------------------------------------------------------------------+
+| **Status**         | 200 OK                                                                                             |
++--------------------+----------------------------------------------------------------------------------------------------+
+| **Content Type**   | *application/json*                                                                                 |
++--------------------+----------------------------------------------------------------------------------------------------+
+| **JSON Fields**                                                                                                         |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| id                 | Integer           | The unique identifier of the model.                                            |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| recipe_type        | String            | The recipe type for this revision. (See :ref:`<rest_v6_recipe_type_list>`)     |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| revision_num       | Integer           | The revision number for this revision of the recipe type.                      |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| definition         | JSON Object       | JSON description defining the interface for running a recipe of this type.     |
+|                    |                   | (See :ref:`rest_v6_recipe_json_definition`)                                    |
++--------------------+-------------------+--------------------------------------------------------------------------------+
+| created            | ISO-8601 Datetime | When the associated database model was initially created.                      |
++--------------------+-------------------+--------------------------------------------------------------------------------+
